@@ -1,0 +1,1 @@
+export { default as domainModel } from './domain.ts'
