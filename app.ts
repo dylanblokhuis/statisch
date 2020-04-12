@@ -1,6 +1,7 @@
 import "https://deno.land/x/dotenv/load.ts";
 import { dso } from "dso";
 import Drash from "drash";
+
 import * as models from "./models/mod.ts";
 import resources from "./api/mod.ts";
 
@@ -17,7 +18,7 @@ async function database() {
     port: parseInt(env().DATABASE_PORT)
   });
 
-  // await dso.sync(true)
+  await dso.sync(false)
 }
 
 function server() {

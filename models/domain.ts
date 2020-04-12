@@ -3,9 +3,7 @@ import {
   dso,
   Field,
   FieldType,
-  Join,
   Model,
-  Where
 } from "dso";
 
 @Model("domains")
@@ -21,8 +19,14 @@ class DomainModel extends BaseModel {
   @Field({ type: FieldType.STRING, length: 255, notNull: true })
   name: string;
 
-  @Field({ type: FieldType.STRING, length: 30, notNull: true })
-  password: string;
+  @Field({ type: FieldType.STRING, length: 255, notNull: true })
+  vhost: string;
+
+  @Field({ type: FieldType.STRING, length: 255, notNull: true })
+  www: string
+
+  @Field({ type: FieldType.INT, length: 11, notNull: false, default: 0 })
+  parent_id: number
 }
 
 export default dso.define(DomainModel);
