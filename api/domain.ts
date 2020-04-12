@@ -11,12 +11,13 @@ class Index extends Drash.Http.Resource {
   }
 
   public async POST() {
-    const params = validator({
+    const data = validator({
       name: 'required|string',
-      vhost: 'required|string'
+      vhost: 'required|string',
+      www: 'required|string',
     }, this.request);
 
-    console.log(params);
+    await domain.insert(data)
 
     return this.response
   }

@@ -16,9 +16,7 @@ function isEmail(email: string): boolean {
 }
 
 export default function validator(params: { [key: string]: string }, request: any): { [key: string]: any } {
-  const formData = Object.entries(params).map(param => {
-    const [key, validationRequirements] = param;
-
+  for (const [key, validationRequirements] of Object.entries(params)) {
     const requirements = validationRequirements.split("|")
 
     for (const requirement of requirements) {
@@ -70,11 +68,8 @@ export default function validator(params: { [key: string]: string }, request: an
       }
     }
 
-    return {
-      [key]: request.getBodyParam(key)
-    }
-  });
+    params[key] = request.getBodyParam(key)
+  }
 
-  
-  return formData
+  return params
 }
