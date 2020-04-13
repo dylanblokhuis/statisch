@@ -4,7 +4,6 @@ import Drash from "drash";
 
 import * as models from "./models/mod.ts";
 import resources from "./api/mod.ts";
-import test from './sbin/mod.ts';
 
 const { env } = Deno
 
@@ -32,8 +31,5 @@ function server() {
   server.run();
 }
 
-await test()
-// await database()
-// await server()
-
-Deno.exit(0)
+await database()
+await server()
