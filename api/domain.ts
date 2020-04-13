@@ -1,8 +1,8 @@
 import Drash from "drash";
+import { Where } from 'dso';
 import domain from '../models/domain.ts'
 import validator from '../utils/validator.ts'
 import Task from "../sbin/task.ts";
-import { Where } from "https://deno.land/x/sql_builder@1.4.0/where.ts";
 
 const { env } = Deno
 
