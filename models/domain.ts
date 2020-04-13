@@ -7,7 +7,7 @@ import {
 } from "dso";
 
 @Model("domains")
-class DomainModel extends BaseModel {
+ class DomainModel extends BaseModel {
   @Field({
     type: FieldType.INT,
     primary: true,
@@ -24,6 +24,12 @@ class DomainModel extends BaseModel {
 
   @Field({ type: FieldType.STRING, length: 255, notNull: true })
   www: string
+
+  @Field({ type: FieldType.STRING, length: 255, notNull: true })
+  root: string
+
+  @Field({ type: FieldType.BOOLEAN, default: false })
+  has_ssl: boolean
 
   @Field({ type: FieldType.INT, length: 11, notNull: false, default: 0 })
   parent_id: number

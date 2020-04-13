@@ -1,13 +1,13 @@
 #!/bin/bash
 
 DOCUMENT_ROOT=$1
-NGINX_PATH=$2
-DOMAIN_NAME=$3
-OWNER=$4
+VHOST_ROOT=$2
+NGINX_PATH=$3
+DOMAIN_NAME=$4
 
 sudo mkdir -p $DOCUMENT_ROOT
 
-cat << EOF >> "$NGINX_PATH"
+cat << EOF >> "$VHOST_ROOT"
 server {
     listen 80;
     listen [::]:80;
@@ -54,7 +54,7 @@ server {
 }
 EOF
 
-sudo ln -s $NGINX_PATH /etc/nginx/sites-enabled/
+sudo ln -s $VHOST_ROOT "${NGINX_PATH}/sites-enabled/"
 sudo systemctl restart nginx
 
 exit 0;
