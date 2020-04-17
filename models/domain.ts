@@ -28,11 +28,17 @@ import {
   @Field({ type: FieldType.STRING, length: 255, notNull: true })
   root: string
 
+  @Field({ type: FieldType.STRING, length: 255, notNull: true })
+  build_command: string
+
+  @Field({ type: FieldType.STRING, length: 255, notNull: true })
+  directory_name: string
+
   @Field({ type: FieldType.BOOLEAN, default: false })
   has_ssl: boolean
 
-  @Field({ type: FieldType.INT, length: 11, notNull: false, default: 0 })
-  parent_id: number
+  // @Field({ type: FieldType.INT, length: 11, notNull: false, default: 0 })
+  // parent_id: number
 }
 
 export default dso.define(DomainModel);

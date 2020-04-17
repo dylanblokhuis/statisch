@@ -1,11 +1,14 @@
 import "https://deno.land/x/dotenv/load.ts";
+import { parse } from "https://deno.land/std/flags/mod.ts";
 import { dso } from "dso";
 import Drash from "drash";
 
 import * as models from "./models/mod.ts";
 import resources from "./api/mod.ts";
+import seeder from './scripts/seeder.ts';
 
-const { env } = Deno
+const { env, args } = Deno
+const runArgs = parse(args);
 
 async function database() {
   await models
@@ -33,3 +36,9 @@ function server() {
 
 await database()
 await server()
+
+if (runArgs?.seed) {
+  // clean database
+  await dso.sync(true)
+  await seeder()
+}

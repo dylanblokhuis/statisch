@@ -1,5 +1,6 @@
 import Drash from "drash";
 import { Where } from 'dso';
+
 import domain from '../models/domain.ts'
 import validator from '../utils/validator.ts'
 import Task from "../sbin/task.ts";
@@ -29,6 +30,8 @@ class Index extends Drash.Http.Resource {
   public async POST() {
     const data = validator({
       name: 'required|string',
+      build_command: 'required|string',
+      directory_name: 'required|string'
     }, this.request);
 
     const root = getRoot(data.name)
@@ -51,6 +54,8 @@ class Index extends Drash.Http.Resource {
         www: documentRoot,
         vhost: vhostRoot,
         root: root,
+        directory_name: data.directory_name,
+        build_command: data.build_command
       })  
     } else {
       throw new Drash.Exceptions.HttpException(
