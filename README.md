@@ -1,6 +1,6 @@
 # statisch
 
-Last tested with deno version 0.40
+Last tested with deno version 0.41.0
 
 Start server:
 ```
