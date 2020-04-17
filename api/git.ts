@@ -1,6 +1,6 @@
 import Drash from "drash";
 
-import { gitModel } from "../models/mod.ts"
+import { gitModel, gitProviderModel } from "../models/mod.ts"
 import validator from '../utils/validator.ts'
 
 class Index extends Drash.Http.Resource {
@@ -34,12 +34,24 @@ class Callback extends Drash.Http.Resource {
   static paths = ["/git/callback"];
   
   public async GET() {  
+    // TODO: add access token to database
+    // makes more sense to build the frontend first and then figure this out
     const oauthCode = this.request.getPathParam("code");
 
     return this.response;
   }
 }
 
+class Providers extends Drash.Http.Resource {
+  static paths = ["/git/providers"];
+  
+  public async GET() {  
+    this.response.body = await gitProviderModel.findAll({})
+
+    return this.response;
+  }
+}
+
 export default [
-  Index, Callback
+  Index, Callback, Providers
 ]
