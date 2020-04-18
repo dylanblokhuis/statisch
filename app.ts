@@ -25,6 +25,7 @@ async function database() {
 }
 
 function server() {
+  console.log(resources)
   const server = new Drash.Http.Server({
     address: "localhost:8000",
     response_output: "application/json",

@@ -3,7 +3,7 @@ import Drash from "drash";
 import { gitModel, gitProviderModel, gitTokensModel } from "../models/mod.ts"
 import validator from '../utils/validator.ts'
 
-class Index extends Drash.Http.Resource {
+class GitIndex extends Drash.Http.Resource {
   static paths = ["/git"];
   
   public async GET() {  
@@ -30,7 +30,7 @@ class Index extends Drash.Http.Resource {
   }
 }
 
-class Callback extends Drash.Http.Resource {
+class GitCallback extends Drash.Http.Resource {
   static paths = ["/git/callback"];
   
   public async GET() {  
@@ -79,7 +79,7 @@ class Callback extends Drash.Http.Resource {
   }
 }
 
-class Providers extends Drash.Http.Resource {
+class GitProviders extends Drash.Http.Resource {
   static paths = ["/git/providers"];
   
   public async GET() {  
@@ -90,7 +90,7 @@ class Providers extends Drash.Http.Resource {
 }
 
 // probably redudant
-class Tokens extends Drash.Http.Resource {
+class GitTokens extends Drash.Http.Resource {
   static paths = ["/git/tokens/:id"];
 
   public async GET() {  
@@ -102,5 +102,5 @@ class Tokens extends Drash.Http.Resource {
 }
 
 export default [
-  Index, Callback, Providers, Tokens
+  GitIndex, GitCallback, GitProviders, GitTokens
 ]

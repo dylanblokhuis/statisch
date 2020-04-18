@@ -19,7 +19,7 @@ function getVhostRoot(name: string) {
   return `${env().NGINX_PATH}/sites-available/${name}`
 }
 
-class Index extends Drash.Http.Resource {
+class DomainIndex extends Drash.Http.Resource {
   static paths = ["/domains"];
   
   public async GET() {  
@@ -70,7 +70,7 @@ class Index extends Drash.Http.Resource {
   }
 }
 
-class Single extends Drash.Http.Resource {
+class DomainSingle extends Drash.Http.Resource {
   static paths = ["/domains/:id"];
 
   public async GET() {
@@ -117,5 +117,5 @@ class Single extends Drash.Http.Resource {
 }
 
 export default [
-  Index, Single
+  DomainIndex, DomainSingle
 ]
