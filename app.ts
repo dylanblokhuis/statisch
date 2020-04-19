@@ -1,11 +1,12 @@
 import "https://deno.land/x/dotenv/load.ts";
 import { parse } from "https://deno.land/std/flags/mod.ts";
 import { dso } from "dso";
-import Drash from "drash";
+import { Drash } from "drash";
 
 import * as models from "./models/mod.ts";
 import resources from "./api/mod.ts";
 import seeder from './scripts/seeder.ts';
+import VerifyTokenMiddleware from "./api/middleware/verify_token.ts";
 
 const { env, args } = Deno
 const runArgs = parse(args);
@@ -25,13 +26,17 @@ async function database() {
 }
 
 function server() {
-  console.log(resources)
   const server = new Drash.Http.Server({
     address: "localhost:8000",
     response_output: "application/json",
-    resources: resources
+    resources: resources,
+    middleware: {
+      resource_level: [
+        VerifyTokenMiddleware
+      ]
+    }
   });
-  
+
   server.run();
 }
 

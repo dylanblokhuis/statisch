@@ -1,12 +1,18 @@
-import Drash from "drash";
+import { Drash } from "drash";
 
 import { gitModel, gitProviderModel, gitTokensModel } from "../models/mod.ts"
 import validator from '../utils/validator.ts'
 
 class GitIndex extends Drash.Http.Resource {
   static paths = ["/git"];
-  
-  public async GET() {  
+
+  static middleware = {
+    before_request: [
+      "VerifyTokenMiddleware"
+    ],
+  }
+
+  public async GET() {
     const git = await gitModel.findById(1);
     if (git?.client_id !== null) {
       throw new Drash.Exceptions.HttpException(
@@ -32,8 +38,8 @@ class GitIndex extends Drash.Http.Resource {
 
 class GitCallback extends Drash.Http.Resource {
   static paths = ["/git/callback"];
-  
-  public async GET() {  
+
+  public async GET() {
     // TODO: add access token to database
     // makes more sense to build the frontend first and then figure this out
 
@@ -59,7 +65,7 @@ class GitCallback extends Drash.Http.Resource {
 
     if (response.ok) {
       const data = await response.text();
-      
+
       const id = await gitTokensModel.insert({
         access_token: data,
         git_id: git.id
@@ -81,8 +87,14 @@ class GitCallback extends Drash.Http.Resource {
 
 class GitProviders extends Drash.Http.Resource {
   static paths = ["/git/providers"];
-  
-  public async GET() {  
+
+  static middleware = {
+    before_request: [
+      "VerifyTokenMiddleware"
+    ],
+  }
+
+  public async GET() {
     this.response.body = await gitProviderModel.findAll({})
 
     return this.response;
@@ -93,7 +105,13 @@ class GitProviders extends Drash.Http.Resource {
 class GitTokens extends Drash.Http.Resource {
   static paths = ["/git/tokens/:id"];
 
-  public async GET() {  
+  static middleware = {
+    before_request: [
+      "VerifyTokenMiddleware"
+    ],
+  }
+
+  public async GET() {
     const id = this.request.getPathParam("id")
     this.response.body = await gitTokensModel.findById(id);
 

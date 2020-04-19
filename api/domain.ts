@@ -1,4 +1,4 @@
-import Drash from "drash";
+import { Drash } from "drash";
 import { Where } from 'dso';
 
 import domain from '../models/domain.ts'
@@ -12,7 +12,7 @@ function getRoot(name: string) {
 }
 
 function getDocumentRoot(name: string) {
-  return `${env().DOCUMENT_ROOT}/${name}/html`; 
+  return `${env().DOCUMENT_ROOT}/${name}/html`;
 }
 
 function getVhostRoot(name: string) {
@@ -21,8 +21,14 @@ function getVhostRoot(name: string) {
 
 class DomainIndex extends Drash.Http.Resource {
   static paths = ["/domains"];
-  
-  public async GET() {  
+
+  // static middleware = {
+  //   before_request: [
+  //     "VerifyTokenMiddleware"
+  //   ],
+  // }
+
+  public async GET() {
     this.response.body = await domain.findAll({});
     return this.response;
   }
@@ -56,7 +62,7 @@ class DomainIndex extends Drash.Http.Resource {
         root: root,
         directory_name: data.directory_name,
         build_command: data.build_command
-      })  
+      })
     } else {
       throw new Drash.Exceptions.HttpException(
         500,
@@ -65,13 +71,19 @@ class DomainIndex extends Drash.Http.Resource {
     }
 
     this.response.body = "Successfully added domain"
-    
+
     return this.response
   }
 }
 
 class DomainSingle extends Drash.Http.Resource {
   static paths = ["/domains/:id"];
+
+  static middleware = {
+    before_request: [
+      "VerifyTokenMiddleware"
+    ],
+  }
 
   public async GET() {
     const domainId = this.request.getPathParam("id");
@@ -82,14 +94,14 @@ class DomainSingle extends Drash.Http.Resource {
   public async DELETE() {
     const domainId = this.request.getPathParam("id");
     const data = await domain.findById(domainId);
-    
+
     // TODO: fix the not null issues
     if (!data || !data.root || !data.www || !data.vhost || !data.name) {
       throw new Drash.Exceptions.HttpException(
         404,
         `Domain doesnt exist`
       );
-    } 
+    }
 
     const domainTask = new Task([
       "sudo", "bash", "./sbin/domains/delete.sh",
@@ -111,7 +123,7 @@ class DomainSingle extends Drash.Http.Resource {
     }
 
     this.response.body = "Successfully deleted domain"
-  
+
     return this.response;
   }
 }

@@ -66,14 +66,16 @@ module.exports = (env, args) => {
       ],
     },
     devServer: {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-      contentBase: './dist',
-      compress: true,
+      contentBase: path.join(__dirname, 'dist'),
       port: 3000,
+      inline: true,
       historyApiFallback: true,
-      hot: true
+      proxy: {
+        '/api': {
+          target: 'http://[::1]:8000',
+          pathRewrite: {'^/api' : ''},
+        }
+      }
     },
     plugins: [
       new ForkTsCheckerWebpackPlugin(),

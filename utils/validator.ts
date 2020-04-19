@@ -11,8 +11,8 @@ function isValidUrl(string: string): boolean {
 }
 
 function isEmail(email: string): boolean {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email)
 }
 
 export default function validator(params: { [key: string]: string }, request: any): { [key: string]: any } {
@@ -59,7 +59,7 @@ export default function validator(params: { [key: string]: string }, request: an
       }
 
       if (requirement === "email") {
-        if (isEmail(value)) {
+        if (!isEmail(value)) {
           throw new Drash.Exceptions.HttpException(
             400,
             `This resource requires the '${key}' body param to be an email.`

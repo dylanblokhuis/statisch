@@ -5,7 +5,8 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "no-param-reassign": "off"
   },
   "env": {
     "browser": true
