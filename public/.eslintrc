@@ -6,7 +6,8 @@
   },
   "rules": {
     "import/extensions": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "no-trailing-spaces": "off"
   },
   "env": {
     "browser": true

@@ -6,12 +6,37 @@ const PurgeCssPlugin = require('purgecss-webpack-plugin');
 const path = require('path');
 const glob = require('glob');
 
+let plugins = [
+  new ForkTsCheckerWebpackPlugin(),
+  new CopyWebpackPlugin([
+    // static files to the site root folder (index and robots)
+    {
+      from: './src/static/**/*',
+      to: path.resolve('./dist/'),
+      toType: 'dir',
+      flatten: true,
+    },
+  ]),
+  new MiniCssExtractPlugin({
+    filename: '[name].css',
+  }),
+]
+
+const productionPlugins = [
+  new PurgeCssPlugin({
+    paths: glob.sync(`${path.join(__dirname, 'src')}/**/*`, {
+      nodir: true,
+    }),
+  }),
+]
+
 module.exports = (env, args) => {
   let production = false;
 
   if (args && args.mode === 'production') {
     production = true;
     console.log('== Production mode');
+    plugins = [...plugins, ...productionPlugins];
   } else {
     console.log('== Development mode');
   }
@@ -77,25 +102,6 @@ module.exports = (env, args) => {
         }
       }
     },
-    plugins: [
-      new ForkTsCheckerWebpackPlugin(),
-      new CopyWebpackPlugin([
-        // static files to the site root folder (index and robots)
-        {
-          from: './src/static/**/*',
-          to: path.resolve('./dist/'),
-          toType: 'dir',
-          flatten: true,
-        },
-      ]),
-      new MiniCssExtractPlugin({
-        filename: '[name].css',
-      }),
-      new PurgeCssPlugin({
-        paths: glob.sync(`${path.join(__dirname, 'src')}/**/*`, {
-          nodir: true,
-        }),
-      }),
-    ],
+    plugins: plugins
   };
 };

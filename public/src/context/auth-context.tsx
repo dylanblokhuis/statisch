@@ -7,13 +7,13 @@ import LoadingSpinner from '../components/loading-spinner';
 import { IUser } from '../types';
 
 export interface IAuthContext {
-  user: IUser | string;
+  user: IUser | null;
   login: { (form: authService.LoginData): any };
   logout: { (): any };
 }
 
 const AuthContext = createContext<IAuthContext>({
-  user: '',
+  user: null,
   login: (form: authService.LoginData) => authService.login(form),
   logout: () => authService.logout(),
 });

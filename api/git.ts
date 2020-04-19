@@ -6,11 +6,11 @@ import validator from '../utils/validator.ts'
 class GitIndex extends Drash.Http.Resource {
   static paths = ["/git"];
 
-  static middleware = {
-    before_request: [
-      "VerifyTokenMiddleware"
-    ],
-  }
+  // static middleware = {
+  //   before_request: [
+  //     "VerifyTokenMiddleware"
+  //   ],
+  // }
 
   public async GET() {
     const git = await gitModel.findById(1);

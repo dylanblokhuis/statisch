@@ -18,7 +18,7 @@ export async function generate(email: string) : Promise<string> {
   const key = env().JWT_SECRET
   const payload: Payload = {
     iss: email, // TODO: research this
-    exp: setExpiration(new Date().getTime() + 60000),
+    exp: setExpiration(new Date().getTime() + 604800000), // number equals to a week
   }
   const header: Jose = {
     alg: "HS256",

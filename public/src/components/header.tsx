@@ -1,15 +1,15 @@
 import { h } from 'preact';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { useUser } from '../context/user-context';
+import Wrapper from './wrapper';
 
 const List = styled.ul`
   display: flex;
   list-style: none;
-  background: #fff;
-  padding: 15px 25px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px 0 rgba(0,0,0,0.10);
-  
+  margin-bottom: 0;
+  padding-left: 0;
+
   li {
     margin-right: 25px;
     
@@ -20,7 +20,7 @@ const List = styled.ul`
       text-decoration: none;    
       
       &[aria-current] {
-        font-weight: 800;
+        font-weight: 700;
       }
       
       &:hover {
@@ -31,16 +31,25 @@ const List = styled.ul`
 `;
 
 function Header() {
+  const { user } = useUser();
+
   return (
-    <nav className="container">
-      <List>
-        <li>
-          <NavLink exact to="/">Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/domains">Domains</NavLink>
-        </li>
-      </List>
+    <nav className="container my-3">
+      <Wrapper className="d-flex justify-content-between align-items-center">
+        <List>
+          <li>
+            <NavLink exact to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/domains">Domains</NavLink>
+          </li>
+        </List>
+
+        <div>
+          {user?.email}
+        </div>
+      </Wrapper>
+
     </nav>
   );
 }

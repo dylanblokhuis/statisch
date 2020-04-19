@@ -1,5 +1,5 @@
 import { h, render } from 'preact';
-import 'bootstrap/dist/css/bootstrap-grid.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import AppProviders from './context';
 import App from './app';

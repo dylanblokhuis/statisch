@@ -1,5 +1,12 @@
 import { h } from 'preact';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  html, body, #___statisch {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 const Fullscreen = styled.div`
   width: 100%;
@@ -8,10 +15,14 @@ const Fullscreen = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: rgb(28, 28, 30);
   color: #fff;
 `;
 
-const LoadingSpinner = () => <Fullscreen>Loading....</Fullscreen>;
+const LoadingSpinner = () => (
+  <Fullscreen>
+    <GlobalStyle />
+    Loading....
+  </Fullscreen>
+);
 
 export default LoadingSpinner;
