@@ -38,8 +38,6 @@ export async function getUser() {
 
   const user = await client('/api/me');
 
-  console.log(user);
-
   if (user) {
     return user;
   }
